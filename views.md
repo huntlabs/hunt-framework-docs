@@ -9,6 +9,7 @@
 
 Views contain the HTML served by your application and separate your controller / application logic from your presentation logic. Views are stored in the `views` directory. A simple view might look something like this:
 
+```html
     <!-- View stored in views/greeting.html -->
 
     <html>
@@ -16,11 +17,28 @@ Views contain the HTML served by your application and separate your controller /
             <h1>Hello, {{ name }}</h1>
         </body>
     </html>
+```
 
 Since this view is stored at `views/greeting.html`, we may return it using the global `view` helper like so:
 
-    view.assign("name", "James");
-    return view.render("greeting");
+```D
+module  app.controller.IndexController;
+
+import  hunt.framework;
+
+class IndexController : Controller
+{
+    mixin MakeController;
+
+    @Action
+    string index()
+    {
+        view.assign("name", "James");
+
+        return view.render("greeting");
+    }
+}
+```
 
 As you can see, the first argument passed to the `view` helper corresponds to the name of the view file in the `views` directory. The second argument is an array of data that should be made available to the view. In this case, we are passing the `name` variable, which is displayed in the view using [Blade syntax](/docs/{{version}}/blade).
 
@@ -28,8 +46,9 @@ As you can see, the first argument passed to the `view` helper corresponds to th
 ## Passing Data To Views
 
 As you saw in the previous examples, you may pass an array of data to views:
-
+```D
     view.assign("greetings", ["name" => "Victoria"]);
+```
 
 When passing information in this manner, the data should be an array with key / value pairs. Inside your view, you can then access each value using its corresponding key, such as `{{ greetings.name }}`.
 
