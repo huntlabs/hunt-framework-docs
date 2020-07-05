@@ -40,7 +40,7 @@ class IndexController : Controller
 }
 ```
 
-As you can see, the first argument passed to the `view` helper corresponds to the name of the view file in the `views` directory. The second argument is an array of data that should be made available to the view. In this case, we are passing the `name` variable, which is displayed in the view using [Blade syntax](/docs/{{version}}/blade).
+As you can see, the first argument passed to the `view` helper corresponds to the name of the view file in the `views` directory. The second argument is an array of data that should be made available to the view. In this case, we are passing the `name` variable, which is displayed in the view like [Twig and Jinja2 syntax](https://github.com/huntlabs/hunt-framework/wiki/View).
 
 <a name="passing-data-to-views"></a>
 ## Passing Data To Views
