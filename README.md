@@ -14,9 +14,9 @@
 - [Database](https://github.com/huntlabs/hunt-framework-docs/blob/master/database.md)
 - [Entity](https://github.com/huntlabs/hunt-framework-docs/blob/master/entity.md)
 - [Cache](https://github.com/huntlabs/hunt-framework-docs/blob/master/cache.md)
-- [HttpClient](https://github.com/huntlabs/hunt-framework-docs/blob/master/http-client.md)
+- [HTTP Client](https://github.com/huntlabs/hunt-framework-docs/blob/master/http-client.md)
 - [Redis](https://github.com/huntlabs/hunt-framework-docs/blob/master/redis.md)
-- [MessageQueue](https://github.com/huntlabs/hunt-framework-docs/blob/master/queues.md)
+- [Message Queue](https://github.com/huntlabs/hunt-framework-docs/blob/master/queues.md)
 - [Validation](https://github.com/huntlabs/hunt-framework-docs/blob/master/validation.md)
 - [Logging](https://github.com/huntlabs/hunt-framework-docs/blob/master/logging.md)
 - [Scheduling](https://github.com/huntlabs/hunt-framework-docs/blob/master/scheduling.md)
@@ -24,4 +24,4 @@
 ## Frontend
 - [Html Template View](https://github.com/huntlabs/hunt-framework-docs/blob/master/views.md)
 - [Localization](https://github.com/huntlabs/hunt-framework-docs/blob/master/localization.md)
-- [Pagination](https://github.com/huntlabs/hunt-framework-docs/blob/master/pagination.md)
+- [Pagination](pagination.md)
