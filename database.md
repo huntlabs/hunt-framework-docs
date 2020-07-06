@@ -34,7 +34,7 @@ By default, hunt-framework's sample is ready to use  which is a convenient virtu
 
 `config/application.conf or config/application.production.conf`
 
-```
+```ini
 hunt.database.default.driver=mysql
 hunt.database.default.host=127.0.0.1
 hunt.database.default.port=3306
@@ -63,7 +63,7 @@ hunt.database.pool.connectionTimeout=30000
 <a name="using-multiple-database-connections"></a>
 ### Using EntityManager
 
-```
+```d
     EntityManager defaultEntityManager()
     {
         
@@ -73,7 +73,7 @@ hunt.database.pool.connectionTimeout=30000
     _manager = defaultEntityManager();
 ```
 or 
-```
+```d
     public EntityManager createEntityManager()
     {
         return defaultEntityManagerFactory().currentEntityManager();
@@ -85,7 +85,7 @@ or
 
 use `_manager` to query database result
 
-```
+```d
     User findByUid(int uid){
         return _manager.createQuery!(User)(" SELECT a FROM User a WHERE a.uid= :uid")
         .setParameter("uid", uid)
@@ -102,8 +102,7 @@ Once you have configured your database connection, you may run queries using the
 #### Running A Select Query
 
 To run a basic query, you may use the `select` method on the `DB` facade:
-```
-
+```d
     module app.component.user.repository.UserRepository;
     import hunt.entity;
     import hunt.framework.Simplify;
@@ -135,7 +134,7 @@ The first argument passed to the `select` method is the raw SQL query, while the
 
 The `select` method will always return an `array` of results. Each result within the array will be a Dlang  object, allowing you to access the values of the results:
 
-```
+```d
     User[] users = (new UserRepository()).finUsers();
     foreach (user;users) {
         writeln(user.name);
@@ -152,7 +151,7 @@ Instead of using `setParameter()` to represent your parameter bindings, you may 
 #### Running An Insert Statement
 
 To execute an `insert` statement, you may use the `insert` method on the `DB` facade.:
-```
+```d
     UserRepository UserRepository = new UserRepository();
     User userModel = new User();
     userModel.name = "John";
@@ -163,7 +162,7 @@ To execute an `insert` statement, you may use the `insert` method on the `DB` fa
 #### Running An Update Statement
 
 The `save` method should be used to update existing records in the database. The database model affected by the statement will be returned:
-```
+```d
     UserRepository UserRepository = new UserRepository();
     User user = UserRepository.findById(1);
     user.name = "Johns";
@@ -186,7 +185,7 @@ The `delete` method should be used to delete records from the database. Like `up
 
 Some database statements do not return any value. For these types of operations, you may use the `getValue` method on the `RowSet` result:
 
-```
+```d
     RowSet findUser(int id){
         string idstr = id.to!string;
         RowSet results = _manager.getSession().prepare(
@@ -214,7 +213,7 @@ Some database statements do not return any value. For these types of operations,
 
 You may use the `transaction` method on the `DB` facade to run a set of operations within a database transaction. If an exception is thrown within the transaction `Closure`, the transaction will automatically be rolled back. If the `Closure` executes successfully, the transaction will automatically be committed. You don't need to worry about manually rolling back or committing while using the `transaction` method:
 
-```
+```d
     defaultEntityManager().getTransaction().begin();
     try
     {
