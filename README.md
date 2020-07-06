@@ -2,26 +2,37 @@
 
 ## Getting Started
 - [Installation](installation.md)
-- [Configuration](configuration.md)
+- [Server Configuration](configuration.md)
 
-## Components
+## Architecture Concepts
+- [Service Container](container.md)
+- [Service Providers](providers.md)
+
+## The Basics
 - [Routing](routing.md)
 - [Middleware](middleware.md)
 - [Controller](controllers.md)
 - [Request](requests.md)
 - [Response](responses.md)
 - [Session](session.md)
-- [Database](database.md)
-- [Entity](entity.md)
-- [Cache](cache.md)
-- [HTTP Client](http-client.md)
-- [Redis](redis.md)
-- [Message Queue](queues.md)
 - [Validation](validation.md)
 - [Logging](logging.md)
-- [Scheduling](scheduling.md)
+
+## Security
+- [Authorization](authorization.md)
+
+## Database
+- [Database](database.md)
+- [Entity](entity.md)
+- [Redis](redis.md)
+- [Pagination](pagination.md)
 
 ## Frontend
-- [Html Template View](views.md)
+- [View Templates](views.md)
 - [Localization](localization.md)
-- [Pagination](pagination.md)
+
+## Digging Deeper
+- [HTTP Client](http-client.md)
+- [Cache](cache.md)
+- [Message Queue](queues.md)
+- [Scheduling](scheduling.md)
