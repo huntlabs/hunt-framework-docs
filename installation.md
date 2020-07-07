@@ -41,8 +41,8 @@ $ curl https://dlang.org/install.sh | bash -s
 ```
 
 #### Activation
-Once a compiler is installed, it can be activated for the current session. Useing the -a or --activate option,
-This will set up the PATH, LIBRARY_PATH, LD_LIBRARY_PATH, DMD, DC, and PS1 environment variables. It's also possible to combine this into one command:
+Once a compiler is installed, it can be activated for the current session. Useing the `-a` or `--activate` option,
+This will set up the `PATH`, `LIBRARY_PATH`, `LD_LIBRARY_PATH`, `DMD`, `DC`, and `PS1` environment variables. It's also possible to combine this into one command:
 ```sh
 $ source ~/dlang/dmd-2.2.091.0/activate
 ```
@@ -106,7 +106,7 @@ Add executable to your `dub.json`
 
 Add config file to `config/application.conf`
 ```ini
-http.address = 127.0.0.1
+http.address = 0.0.0.0
 http.port = 8080
 ```
 
