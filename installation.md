@@ -184,7 +184,7 @@ myproject/
 │   │   ├── controller
 │   │   │   ├── IndexController.d
 │   └── main.d
-├── dub.json
+└── dub.json
 ```
 
 **NOTE**: If you want to see more information about hunt, you can browse other documents in other directories. Thank you for watching
