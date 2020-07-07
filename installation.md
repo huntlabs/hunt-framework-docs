@@ -1,8 +1,8 @@
 # Installation
 
 - [Server Requirements](#server-requirements)
-- [Linux: Installing DMD](#installing-dmd)
-- [Linux: Installing Hunt](#linux-installing-Hunt)
+- [Installing DMD](#installing-dmd)
+- [Installing Hunt-Framework](#linux-installing-Hunt)
 - [Configuration](#configuration)
 - [Coding](#coding)
 - [Start Program](#start-program)
