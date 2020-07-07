@@ -23,7 +23,7 @@
 
 ## Database
 - [Database](database.md)
-- [Entity](entity.md)
+- [ORM](entity.md)
 - [Redis](redis.md)
 - [Pagination](pagination.md)
 
