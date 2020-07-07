@@ -1,25 +1,24 @@
-# Entity: Getting Started
+# ORM: Hunt-Enitty
 
-- [Entity: Getting Started](#entity-getting-started)
-  - [Introduction](#introduction)
-  - [Defining Models](#defining-models)
-    - [Entity Model Conventions](#entity-model-conventions)
-      - [Table Names](#table-names)
-      - [Primary Keys](#primary-keys)
-      - [Timestamps](#timestamps)
-    - [Default Attribute Values](#default-attribute-values)
-  - [Retrieving Models](#retrieving-models)
-      - [Adding Additional Constraints](#adding-additional-constraints)
-      - [Refreshing Models](#refreshing-models)
-  - [Inserting & Updating Models](#inserting--updating-models)
-    - [Inserts](#inserts)
-    - [Updates](#updates)
-      - [Mass Updates](#mass-updates)
+- [Introduction](#introduction)
+- [Defining Models](#defining-models)
+- [Entity Model Conventions](#entity-model-conventions)
+    - [Table Names](#table-names)
+    - [Primary Keys](#primary-keys)
+    - [Timestamps](#timestamps)
+- [Default Attribute Values](#default-attribute-values)
+- [Retrieving Models](#retrieving-models)
+    - [Adding Additional Constraints](#adding-additional-constraints)
+    - [Refreshing Models](#refreshing-models)
+- [Inserting & Updating Models](#inserting--updating-models)
+- [Inserts](#inserts)
+- [Updates](#updates)
+    - [Mass Updates](#mass-updates)
 
 <a name="introduction"></a>
 ## Introduction
 
-The Entity ORM included with Dlang provides a beautiful, simple ActiveRecord implementation for working with your database. Each database table has a corresponding "Model" which is used to interact with that table. Models allow you to query for data in your tables, as well as insert new records into the table.
+The Hunt-Entity is an object-relational mapping (ORM) tool for D, which provides a beautiful, simple ActiveRecord implementation for working with your database. Each database table has a corresponding "Model" which is used to interact with that table. Models allow you to query for data in your tables, as well as insert new records into the table.
 
 Before getting started, be sure to configure a database connection in `config/application.conf`. For more information on configuring your database,.
 
