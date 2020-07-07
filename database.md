@@ -1,29 +1,25 @@
 # Database: Getting Started
 
-- [Database: Getting Started](#database-getting-started)
-  - [Introduction](#introduction)
-    - [Configuration](#configuration)
-    - [Using EntityManager](#using-entitymanager)
-  - [Running Raw SQL Queries](#running-raw-sql-queries)
-      - [Running A Select Query](#running-a-select-query)
-      - [Using Named Bindings](#using-named-bindings)
-      - [Running An Insert Statement](#running-an-insert-statement)
-      - [Running An Update Statement](#running-an-update-statement)
-      - [Running A Delete Statement](#running-a-delete-statement)
-      - [Running A General Statement](#running-a-general-statement)
-  - [Database Transactions](#database-transactions)
-      - [Manually Using Transactions](#manually-using-transactions)
+- [Introduction](#introduction)
+- [Configuration](#configuration)
+- [Using EntityManager](#using-entitymanager)
+- [Raw SQL Queries](#running-raw-sql-queries)
+    - [Select](#running-a-select-query)
+    - [Insert](#running-an-insert-statement)
+    - [Update](#running-an-update-statement)
+    - [Delete](#running-a-delete-statement)
+    - [Named Bindings](#using-named-bindings)
+    - [General Query](#running-a-general-statement)
+- [Database Transactions](#database-transactions)
+    - [Manually Using Transactions](#manually-using-transactions)
 
 <a name="introduction"></a>
 ## Introduction
 
-hunt-framework makes interacting with databases extremely simple across a variety of database backends using either raw SQL, Currently, hunt-framework supports four databases:
+The Hunt framework makes interacting with databases extremely simple across a variety of database backends using either raw SQL. Currently, the Hunt framework supports two databases:
 
 - MySQL 5.6+ ([Version Policy](https://en.wikipedia.org/wiki/MySQL#Release_history))
 - PostgreSQL 9.4+ ([Version Policy](https://www.postgresql.org/support/versioning/))
-- SQLite 3.8.8+
-- SQL Server 2017+ ([Version Policy](https://support.microsoft.com/en-us/lifecycle/search))
-
 
 <a name="configuration"></a>
 ### Configuration
@@ -32,33 +28,32 @@ The database configuration for your application is located at `config/applicatio
 
 By default, hunt-framework's sample is ready to use  which is a convenient virtual machine for doing hunt-framework development on your local machine. You are free to modify this configuration as needed for your local database.
 
-`config/application.conf or config/application.production.conf`
+`config/application.conf`
 
 ```ini
-hunt.database.default.driver=mysql
-hunt.database.default.host=127.0.0.1
-hunt.database.default.port=3306
-hunt.database.default.database=hunt-framework
-hunt.database.default.username=hunt-user
-hunt.database.default.password=123456789
-hunt.database.default.charset=utf8mb4
-hunt.database.default.prefix=hc_
-hunt.database.default.enabled=true
+# Database
+# postgresql, mysql
+database.driver=postgresql
+database.host=127.0.0.1
+database.port=2345
+database.database=test
+database.username=root
+database.password=
+database.charset=utf8
+database.prefix=
+database.enabled=false
 
-hunt.database.pool.name=
-hunt.database.pool.minIdle=5
-hunt.database.pool.idleTimeout=30000
-hunt.database.pool.maxConnection=20
-hunt.database.pool.minConnection=5
-hunt.database.pool.maxPoolSize=20
-hunt.database.pool.minPoolSize=20
-#hunt.database.pool.maxLifetime=2000000
-hunt.database.pool.connectionTimeout=30000
+database.pool.name=
+database.pool.minIdle=5
+database.pool.idleTimeout=30000
+database.pool.maxConnection=20
+database.pool.minConnection=5
+database.pool.maxPoolSize=20
+database.pool.minPoolSize=20
+database.pool.maxLifetime=2000000
+database.pool.connectionTimeout=30000
 
 ```
-
-
-
 
 <a name="using-multiple-database-connections"></a>
 ### Using EntityManager
@@ -95,13 +90,13 @@ use `_manager` to query database result
 ```
 
 <a name="running-queries"></a>
-## Running Raw SQL Queries
+## Raw SQL Queries
 
 Once you have configured your database connection, you may run queries using the `DB` facade. The `DB` facade provides methods for each type of query: `select`, `update`, `insert`, `delete`, and `statement`.
 
-#### Running A Select Query
+#### Select
+To run a basic query, you may use the `select` statement:
 
-To run a basic query, you may use the `select` method on the `DB` facade:
 ```d
     module app.component.user.repository.UserRepository;
     import hunt.entity;
@@ -245,4 +240,3 @@ You can rollback the transaction via the `rollBack` method:
 Lastly, you can commit a transaction via the `commit` method:
 
     defaultEntityManager().getTransaction().commit();
-
