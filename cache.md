@@ -1,7 +1,7 @@
 # Hunt Cache
 Universal cache library for D programming language.
 
-- [Install](#install)
+- [Installation](#installation)
 - [Configuration](#configuration)
 - [Support backend](#support-backend)
 - [Versions](#versions)
@@ -13,7 +13,7 @@ Universal cache library for D programming language.
 - [Helper in the framework](#helper)
 
 
-<a name="install"></a>
+<a name="installation"></a>
 ## Install
 To use this package, run the following command in your project's root directory:
 
@@ -24,9 +24,9 @@ dub add hunt-cache
 <a name="configuration"></a>
 ## Configuration
 
-hunt-framework provides an expressive, unified API for various caching backends. The cache configuration is located at `config/application.conf`. In this file you may specify which cache driver you would like to be used by default throughout your application. hunt-framework supports popular caching backends like [Memcached](https://memcached.org) and [Redis](https://redis.io) out of the box.
+Hunt framework provides an expressive, unified API for various caching backends. The cache configuration is located at `config/application.conf`. In this file you may specify which cache driver you would like to be used by default throughout your application. Hunt framework supports popular caching backends like [Memcached](https://memcached.org) and [Redis](https://redis.io) out of the box.
 
-The cache configuration file also contains various other options, which are documented within the file, so make sure to read over these options. By default, hunt-framework is configured to use the `file` cache driver, which stores the serialized, cached objects in the filesystem. For larger applications, it is recommended that you use a more robust driver such as Memcached or Redis. You may even configure multiple cache configurations for the same driver.
+The cache configuration file also contains various other options, which are documented within the file, so make sure to read over these options. By default, Hunt framework is configured to use the `memory` cache driver, which stores the serialized, cached objects in the momory. For larger applications, it is recommended that you use a more robust driver such as Memcached or Redis. You may even configure multiple cache configurations for the same driver.
 
 ```ini
 # redis, memory
