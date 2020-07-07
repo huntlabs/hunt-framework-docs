@@ -1,4 +1,4 @@
-# Database: Getting Started
+# Database
 
 - [Introduction](#introduction)
 - [Configuration](#configuration)
