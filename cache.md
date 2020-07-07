@@ -29,19 +29,19 @@ hunt-framework provides an expressive, unified API for various caching backends.
 The cache configuration file also contains various other options, which are documented within the file, so make sure to read over these options. By default, hunt-framework is configured to use the `file` cache driver, which stores the serialized, cached objects in the filesystem. For larger applications, it is recommended that you use a more robust driver such as Memcached or Redis. You may even configure multiple cache configurations for the same driver.
 
 ```ini
-hunt.cache.adapter = redis
-hunt.cache.prefix = hunt_cache_
-hunt.cache.expire = 3600
-hunt.cache.args = 127.0.0.1:6379
-hunt.cache.useSecondLevelCache = false
+# redis, memory
+cache.adapter = redis
+cache.prefix = huntcache_
+cache.expire = 3600
+cache.useSecondLevelCache = false
 
-hunt.cache.redis.host = 127.0.0.1
-hunt.cache.redis.port = 6379
-hunt.cache.redis.database = 0
-hunt.cache.redis.password =
-hunt.cache.redis.timeout = 0
-hunt.cache.redis.cluster.enabled = false
-hunt.cache.redis.cluster.nodes =
+# Redis
+redis.enabled = true
+redis.host = 127.0.0.1
+redis.port = 6379
+redis.database = 0
+redis.password = foobared
+redis.timeout = 8000
 ```
 
 <a name="support-backend"></a>
