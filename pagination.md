@@ -1,4 +1,4 @@
-# Database: Pagination
+# Pagination
 
 - [Introduction](#introduction)
 - [Basic Usage](#basic-usage)
