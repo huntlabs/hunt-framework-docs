@@ -34,10 +34,12 @@ When environment variable `HUNT_ENV` is empty, the default value `test` will be 
 
 The hunt-framework presupposes four important environment variables :
 
-`ENV_APP_NAME` is used to set the app name;
-`ENV_APP_VERSION` is used to set the app version;
-`ENV_APP_ENV` is the same as `HUNT_ENV`, and `HUNT_ENV` has higher priority than `ENV_APP_ENV`;
-`ENV_APP_LANG` is used to set the default language pack.
+name | describe
+---|---
+`ENV_APP_NAME` | Used to set the app name;
+`ENV_APP_VERSION` | Used to set the app version;
+`ENV_APP_ENV` | The same as `HUNT_ENV`, and `HUNT_ENV` has higher priority than `ENV_APP_ENV`;
+`ENV_APP_LANG` | Used to set the app language pack.
 
 You can also specify the configuration file to use from the command line, for example, to start a project using the command line and specify the configuration file `application.test.conf`:
 
@@ -45,7 +47,7 @@ You can also specify the configuration file to use from the command line, for ex
 ./examples serve -e test
 ```
 
-> {tip} Setting the configuration file in command line has higher priority than set environment variable.
+> {tip} Setting the configuration file in command line has higher priority than environment variable.
 
 Methods to get the settings in the configuration file, such as getting `application.name` :
 
@@ -63,6 +65,7 @@ class IndexController : Controller {
         ApplicationConfig conf = config();
         return conf.application.name;
     }
+}
 ```
 
 <a name="acustom-configuration"></a>
@@ -70,7 +73,25 @@ class IndexController : Controller {
 
 Take configuring a `GithubConfig` as an example:
 
-1. Create a `source/app/config/basicalapplicationconfig.d` file:
+1. Define a MODEL. 
+Create a `source/app/config/GithubConfig.d` file:
+
+```d
+module app.config.GithubConfig;
+
+import hunt.util.Configuration;
+
+@ConfigurationFile("github")
+class GithubConfig {
+    string appid = "12345";
+    string secret = "test-github";
+    string accessTokenUrl = "TokenUrl";
+    string userInfoUrl = "InfoUrl";
+}
+```
+
+2. Define a configuration file.
+Create a `source/app/config/basicalapplicationconfig.d` file:
 
 ```d
 module app.config.BasicApplicationConfig;
@@ -95,33 +116,18 @@ class BasicApplicationConfig : BasicApplicationConfigBase {
     GithubConfig github;
 }
 ```
-
-2. Create a `source/app/config/GithubConfig.d` file:
-
-```d
-module app.config.GithubConfig;
-
-import hunt.util.Configuration;
-
-@ConfigurationFile("github")
-class GithubConfig {
-    string appid = "12345";
-    string secret = "test-github";
-    string accessTokenUrl = "TokenUrl";
-    string userInfoUrl = "InfoUrl";
-}
-```
-
-3. Create a `source/app/config/package.d` file:
-
+3. Load the configuration file and use it.
+You can create a `package.d` to reference the required files, for example, create a `source/app/config/package.d` file:
 ```d
 module app.config;
 
 public import app.config.BasicApplicationConfig;
 public import app.config.GithubConfig;
 ```
+You can also import the required files without creating `package.d`;
+<br />
 
-4. Create a file `source/app/controller/IndexController.d` and read the settings in the configuration file :
+Create a file `source/app/controller/IndexController.d` and read the settings in the configuration file :
 
 ```d
 module app.controller.IndexController;
@@ -140,4 +146,11 @@ class IndexController : Controller {
         string accessTokenUrl = githubConfig.accessTokenUrl;
         return accessTokenUrl;
     }
+}
+```
+If you don't create `package.d`, replace the `import app.config;` above with the following:
+
+```d
+import app.config.BasicApplicationConfig;
+import app.config.GithubConfig;
 ```
