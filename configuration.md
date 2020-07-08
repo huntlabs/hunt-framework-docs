@@ -3,8 +3,7 @@
 - [Introduction](#introduction)
 - [Environment Configuration](#environment-configuration)
     - [Environment Variable](#environment-variable)
-    - [Retrieving Environment Configuration](#retrieving-environment-configuration)
-- [Accessing Configuration Values](#accessing-configuration-values)
+- [Custom configuration](#custom-configuration)
 
 <a name="introduction"></a>
 ## Introduction
@@ -25,26 +24,120 @@ If you are developing with a team, you may wish to continue including a `applica
 <a name="environment-variable"></a>
 ### Environment Variable
 
-All variables will in your `application.conf` files are parsed as strings, so some reserved values have been created to allow you to return a wider range of types from the `environment.get("KEY", "DEFAULT_VALUE")` function:
+All variables will in your `application.conf` files are parsed as strings, and you can set the configuration used by setting some environment variables, get environment variables using `environment.get ("key", "default_ value");`, for example, the get name is hunt_ Env environment variables :
 
+```d
     import std.process;
-    string huntEnv = environment.get("HUNT_ENV", "");
-    if(huntEnv != "") {
-        configManager().setAppSection("", DEFAULT_CONFIG_PATH ~ "application." ~ huntEnv ~ ".conf");
-    } else {
-        configManager().setAppSection("", DEFAULT_CONFIG_PATH ~ "application.conf");
+    string huntEnv = environment.get("HUNT_ENV", "test");
+```
+When environment variable `HUNT_ENV` is empty, the default value `test` will be used, and hunt-framework will use `application.test.conf`;
+
+The hunt-framework presupposes four important environment variables :
+
+`ENV_APP_NAME` is used to set the app name;
+`ENV_APP_VERSION` is used to set the app version;
+`ENV_APP_ENV` is the same as `HUNT_ENV`, and `HUNT_ENV` has higher priority than `ENV_APP_ENV`;
+`ENV_APP_LANG` is used to set the default language pack.
+
+You can also specify the configuration file to use from the command line, for example, to start a project using the command line and specify the configuration file `application.test.conf`:
+
+```sh
+./examples serve -e test
+```
+
+> {tip} Setting the configuration file in command line has higher priority than set environment variable.
+
+Methods to get the settings in the configuration file, such as getting `application.name` :
+
+```d
+module app.controller.IndexController;
+
+import hunt.framework;
+
+class IndexController : Controller {
+
+    mixin MakeController;
+
+    @Action 
+    string testApplicationName() {
+        ApplicationConfig conf = config();
+        return conf.application.name;
+    }
+```
+
+<a name="acustom-configuration"></a>
+## Custom configuration
+
+Take configuring a `GithubConfig` as an example:
+
+1. Create a `source/app/config/basicalapplicationconfig.d` file:
+
+```d
+module app.config.BasicApplicationConfig;
+
+import hunt.framework.config.ApplicationConfig;
+import hunt.util.Configuration;
+
+class BasicApplicationConfigBase : ApplicationConfig {
+
+}
+
+@ConfigurationFile("application")
+class BasicApplicationConfig : BasicApplicationConfigBase {
+
+    struct GithubConfig {
+        string appid = "1234";
+        string secret = "test";
+        string accessTokenUrl = "TokenUrl";
+        string userInfoUrl = "InfoUrl";
     }
 
-<a name="retrieving-environment-configuration"></a>
-### Retrieving Environment Configuration
+    GithubConfig github;
+}
+```
 
- You may retrieve values from these variables in your configuration files. In fact, if you review the hunt-framework configuration files, you will notice several of the options already using this helper:
+2. Create a `source/app/config/GithubConfig.d` file:
 
-    string path = configManager().config("hunt").file.path.value;
+```d
+module app.config.GithubConfig;
 
-<a name="accessing-configuration-values"></a>
-## Accessing Configuration Values
+import hunt.util.Configuration;
 
-You may easily access your configuration values using the global `config` helper function from anywhere in your application. The configuration values may be accessed using "dot" syntax, which includes the name of the file and option you wish to access. A default value may also be specified and will be returned if the configuration option does not exist:
+@ConfigurationFile("github")
+class GithubConfig {
+    string appid = "12345";
+    string secret = "test-github";
+    string accessTokenUrl = "TokenUrl";
+    string userInfoUrl = "InfoUrl";
+}
+```
 
-    string path = configManager().config("hunt").file.path.value;
+3. Create a `source/app/config/package.d` file:
+
+```d
+module app.config;
+
+public import app.config.BasicApplicationConfig;
+public import app.config.GithubConfig;
+```
+
+4. Create a file `source/app/controller/IndexController.d` and read the settings in the configuration file :
+
+```d
+module app.controller.IndexController;
+
+import app.config;
+
+import hunt.framework;
+
+class IndexController : Controller {
+
+    mixin MakeController;
+
+    @Action 
+    string testTokenUrl() {
+        GithubConfig githubConfig = configManager().load!GithubConfig();
+        string accessTokenUrl = githubConfig.accessTokenUrl;
+        return accessTokenUrl;
+    }
+```

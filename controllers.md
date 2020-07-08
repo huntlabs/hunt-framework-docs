@@ -6,6 +6,8 @@
 - [Controller Middleware](#controller-middleware)
 - [Dependency Injection & Controllers](#dependency-injection-and-controllers)
 - [Request and Response](#request-and-response)
+- [Controllers Bound to Route](#controllers-bound-to-route)
+- [Params Validation and From Validation](#params-validation-and-from-validation)
 
 <a name="introduction"></a>
 ## Introduction
@@ -20,6 +22,7 @@ Instead of defining all of your request handling logic as Closures in route file
 
 Below is an example of a basic controller class. Note that the controller extends the base controller class included with hunt-framework. The base class provides a few convenience methods such as the `middleware` method, which may be used to attach middleware to controller actions:
 
+```d
     module app.controller.HelloController;
 
     import hunt.framework;
@@ -35,6 +38,7 @@ Below is an example of a basic controller class. Note that the controller extend
             return "Hello world!";
         }
     }
+```    
 
 You can define a route to this controller action like so:
 
@@ -49,10 +53,13 @@ Now, when a request matches the specified route URI, the `world` method on the `
 
 [Middleware](https://github.com/huntlabs/hunt-framework-docs/blob/master/middleware.md) may be assigned to the controller files:
 
+```d
     import app.component.middleware.AccountMiddleware;
+```
 
 However, it is more convenient to specify middleware within your controller's constructor. Using the `middleware` method from your controller's constructor, you may easily assign middleware to the controller's action. 
 
+```d
     module app.controller.HelloController;
 
     import hunt.framework;
@@ -73,6 +80,7 @@ However, it is more convenient to specify middleware within your controller's co
             return "Hello world!";
         }
     }
+```
 
 <a name="dependency-injection-and-controllers"></a>
 ## Dependency Injection & Controllers
@@ -81,6 +89,7 @@ However, it is more convenient to specify middleware within your controller's co
 
  You are able to type-hint any dependencies your controller may need in its constructor. The declared dependencies will automatically be resolved and injected into the controller instance:
 
+```d
     module app.controller.HelloController;
 
     import hunt.framework;
@@ -96,11 +105,13 @@ However, it is more convenient to specify middleware within your controller's co
             this.name = name;
         }
     }
+```
 
 #### Method Injection
 
 In addition to constructor injection, you may also type-hint dependencies on your controller's methods. A common use-case for method injection is injecting the `hunt.framework.http.Request` instance into your controller methods:
 
+```d
     module app.controller.HelloController;
 
     import hunt.framework;
@@ -117,6 +128,7 @@ In addition to constructor injection, you may also type-hint dependencies on you
             return "Hello " ~ request.input("name");
         }
     }
+```
 
 <a name="request-and-response"></a>
 ## Request and Response
@@ -128,41 +140,52 @@ Controller have two property request and response，look: [Request](https://gith
 
 1. return `string`
 
+```d
     @Action string showString()
     {
         return "Hello world.";
     }
+```
 
 2. return int、float
 
+```d
     @Action int showInt()
     {
         return 2018;
     }
+```
 
 3. don't return
 
+```d
     @Action void showString()
     {
         // do nothing;
     }
+```
 
 4. return `bool`
 
+```d
     @Action bool showBool()
     {
         return true;
     }
+```
 
 5. return`Response`
 
+```d
     @Action Response showResponse()
     {
         return new Response("Hello world.");
     }
+```
 
 6. rerturn `JsonResponse`
 
+```d
     @Action JsonResponse testJson2()
     {
         JSONValue company;
@@ -171,11 +194,24 @@ Controller have two property request and response，look: [Request](https://gith
         JsonResponse res = new JsonResponse(company);
         return res;
     }
+```
 
 7. return custom Response object `RedirectResponse`
 
+```d
     @Action RedirectResponse testRedirect()
     {
         RedirectResponse r = new RedirectResponse("https://github.com/huntlabs/hunt-framework/");
         return r;
     }
+```
+
+<a name="controllers-bound-to-route"></a>
+## Controllers Bound to Route
+
+How the controller is bound to the route, please look: [routing]（ https://github.com/huntlabs/hunt-framework-docs/blob/master/routing.md )
+
+<a name="params-validation-and-from-validation"></a>
+## Params Validation and From Validation
+
+Controller can verify parameters and forms, please look: [validation]（ https://github.com/huntlabs/hunt-framework-docs/blob/master/validation.md )
