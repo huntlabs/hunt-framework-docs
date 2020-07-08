@@ -22,7 +22,7 @@
 - [Authorization](authorization.md)
 
 ## Database
-- [ORM(Entity)](entity.md)
+- [Entity(ORM)](entity.md)
 - [Redis](redis.md)
 - [Pagination](pagination.md)
 
