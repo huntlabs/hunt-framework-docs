@@ -209,9 +209,9 @@ Controller have two property request and response，look: [Request](https://gith
 <a name="controllers-bound-to-route"></a>
 ## Controllers Bound to Route
 
-How the controller is bound to the route, please look: [routing]（ https://github.com/huntlabs/hunt-framework-docs/blob/master/routing.md )
+How the controller is bound to the route, please check [this](https://github.com/huntlabs/hunt-framework-docs/blob/master/routing.md).
 
 <a name="params-validation-and-from-validation"></a>
 ## Params Validation and From Validation
 
-Controller can verify parameters and forms, please look: [validation]（ https://github.com/huntlabs/hunt-framework-docs/blob/master/validation.md )
+Controller can verify parameters and forms, please check [this](https://github.com/huntlabs/hunt-framework-docs/blob/master/validation.md).
