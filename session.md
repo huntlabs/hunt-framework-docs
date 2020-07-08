@@ -1,12 +1,10 @@
 # HTTP Session
 
 - [Introduction](#introduction)
-    - [Configuration](#configuration)
-    - [Driver Prerequisites](#driver-prerequisites)
+- [Configuration](#configuration)
 - [Using The Session](#using-the-session)
     - [Retrieving Data](#retrieving-data)
     - [Storing Data](#storing-data)
-    - [Flash Data](#flash-data)
     - [Deleting Data](#deleting-data)
     
 <a name="introduction"></a>
@@ -15,7 +13,7 @@
 Since HTTP driven applications are stateless, sessions provide a way to store information about the user across multiple requests. hunt-framework ships with a variety of session backends that are accessed through an expressive, unified API. Support for popular backends such as [Redis](https://redis.io), and memory is included out of the box. That's because the session storage depends on the [Hunt-Cache](cache.md).
 
 <a name="configuration"></a>
-### Configuration
+## Configuration
 
 The configuration for session is stored in `config/application.conf`. Be sure to review the options available to you in this file. If the backend's settings will use the ones for [Cache](cache.md).
 
