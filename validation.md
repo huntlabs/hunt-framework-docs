@@ -89,7 +89,7 @@ class LoginForm : Form
 ```
 
 <a name="get-method-validation-params"></a>
-## GET Method Validation Params
+## QueryParameters Validation
 
 The parameters obtained by get method can also use validation, which is different from 'form validation', and does not need to create a rule file for validation:
 ```d
