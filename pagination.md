@@ -3,7 +3,7 @@
 - [Introduction](#introduction)
 - [Basic Usage](#basic-usage)
 - [Paginating Query Builder Results](#paginating-query-builder-results)
-    - ["Simple Pagination"](#simple-pagination)
+    - [Simple Pagination](#simple-pagination)
 - [Paginating Entity Results](#paginating-entity-results)
 - [Manually Creating A Paginator](#manually-creating-a-paginator)
 - [Displaying Pagination Results](#displaying-pagination-results)
