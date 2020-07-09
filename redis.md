@@ -5,11 +5,12 @@
 
   - [Introduction](#introduction)
     - [So what can I do with Redis?](#so-what-can-i-do-with-redis)
-    - [To use it just:](#to-use-it-just)
-    - [Redis Cluster](#redis-cluster)
   - [Hunt framework Redis](#hunt-framework-redis)
     - [Configuration](#configuration)
     - [Use example](#use-example)
+  - [Custom using Hunt Redis](#custom-using-hunt-redis)
+    - [To use it just:](#to-use-it-just)
+    - [Redis Cluster](#redis-cluster)
   - [hunt-redis functions](#hunt-redis-functions)
 
 <a name="introduction"></a>
@@ -41,31 +42,6 @@ All of the following redis features are supported:
 - Sharding with pipelining
 - Scripting with pipelining
 - Redis Cluster
-
-<a name="to-use-it-just"></a>
-### To use it just:
-
-```d
-string password="123456";
-Redis redis = new Redis("localhost","6379");
-redis.auth(password);  // if has password ,use auth() method
-redis.set("foo", "bar");
-string value = redis.get("foo");
-```
-
-<a name="redis-cluster"></a>
-###  Redis Cluster
-Redis cluster specification (still under development) is implemented
-
-```d
-Set!(HostAndPort) redisClusterNodes = new HashSet!(HostAndPort)();
-//Redis Cluster will attempt to discover cluster nodes automatically
-redisClusterNodes.add(new HostAndPort("127.0.0.1", 7379));
-RedisCluster rc = new RedisCluster(redisClusterNodes);
-rc.set("foo", "bar");
-string value = rc.get("foo");
-```
-
 
 <a name="hunt-framework-redis"></a>
 ## Hunt framework Redis
@@ -114,11 +90,47 @@ void test()
 }
 ```
 
+<a name="custom-using-hunt-redis"></a>
+## Custom using Hunt Redis
+
+<a name="to-use-it-just"></a>
+### To use it just:
+
+```D
+import hunt.redis;
+
+void main()
+{
+    string password="123456";
+
+    Redis redis = new Redis("localhost", "6379");
+
+    redis.auth(password);  // if has password ,use auth() method
+
+    redis.set("foo", "bar");
+    string value = redis.get("foo");
+
+    import std.stdio : writeln;
+
+    writeln(value);
+}
+```
+
+<a name="redis-cluster"></a>
+###  Redis Cluster
+Redis cluster specification (still under development) is implemented
+
+```d
+Set!(HostAndPort) redisClusterNodes = new HashSet!(HostAndPort)();
+//Redis Cluster will attempt to discover cluster nodes automatically
+redisClusterNodes.add(new HostAndPort("127.0.0.1", 7379));
+RedisCluster rc = new RedisCluster(redisClusterNodes);
+rc.set("foo", "bar");
+string value = rc.get("foo");
+```
+
 <a name="hunt-redis-functions"></a>
 ## Hunt-redis functions
 All redis functions you can see :
 
 [Hunt-redis functions](https://github.com/huntlabs/hunt-redis/blob/master/source/hunt/redis/Redis.d)
-
-
-
