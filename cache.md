@@ -11,7 +11,7 @@ Hunt framework provides an expressive, unified API for various caching backends.
 
 The cache configuration file also contains various other options, which are documented within the file, so make sure to read over these options. By default, Hunt framework is configured to use the `memory` cache driver, which stores the serialized, cached objects in the momory. For larger applications, it is recommended that you use a more robust driver such as Redis. You may even configure multiple cache configurations for the same driver.
 
-```ini
+```conf
 # redis, memory
 cache.adapter = memory
 cache.prefix = huntcache_
@@ -45,10 +45,9 @@ void test()
 {
     auto cache = app().cache();
 
-    // 
+    // code for cache string
     cache.set("name", "jhons", 60);
     string name = cache.get("name");
-
 
     // define key
     string key = "userinfo";
