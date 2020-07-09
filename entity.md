@@ -27,142 +27,140 @@ Before getting started, be sure to configure a database connection in `config/ap
 
 To get started, let's create an Entity model. Models typically live in the `app` directory, but you are free to place them anywhere that can be auto-loaded according to your  file. All Entity models extend `hunt.entity.Model` class.
 
-
 <a name="Entity-model-conventions"></a>
 ### Entity Model Conventions
 
 Now, let's look at an example `Role` model, which we will use to retrieve and store information from our `role` database table:
 
-    
-```
-    module app.component.system.model.Role;
-    import hunt.entity;
-    @Table("role")
-    class Role : Model 
-    {
-        mixin MakeModel;
+```D
+module app.component.system.model.Role;
 
-        @AutoIncrement
-        @PrimaryKey
-        int id;
-        string name;
-        int created;
-        int updated;
-        short status;
+import hunt.framework;
 
-    }
+@Table("role")
+class Role : Model 
+{
+    mixin MakeModel;
 
+    @AutoIncrement
+    @PrimaryKey
+    int id;
+
+    string name;
+
+    short status;
+
+    int created;
+    int updated;
+}
 ```
 
 or use `@Column("field_name")` change output column name
 
+```D
+module app.component.rocket.model.User;
+
+import hunt.framework;
+
+@Table("rocket_user")
+class User : Model
+{
+    mixin MakeModel;
+
+    @AutoIncrement
+    @PrimaryKey
+    int   id;
+
+    string uid;
+
+    string cids;
+
+    @Column("user_status")
+    short userStatus;
+
+    @Column("total_bonus")
+    int totalBonus;
+
+    int created;
+    int updated;
+}
 ```
-    module app.component.rocket.model.User;
-    import hunt.entity;
-
-    @Table("rocket_user")
-    class User : Model
-    {
-        mixin MakeModel;
-        @AutoIncrement
-        @PrimaryKey
-        int   id;
-        string uid; 
-        string cids;
-
-        @Column("user_status")
-        short userStatus;
-
-        @Column("total_bonus")
-        int totalBonus;
-
-        int created;
-        int updated;
-
-
-    }
-```
-
 
 #### Table Names
 
 Note that we did not tell Entity which table to use for our `Role` model. By convention, the "snake case", plural name of the class will be used as the table name unless another name is explicitly specified. So, in this case, Entity will assume the `Role` model stores records in the `Roles` table. You may specify a custom table by defining a `@Table` property on your model:
 
+```D
+module app.component.system.model.Role;
+
+import hunt.framework;
+
+@Table("role")
+class Role : Model 
+{
+
+}
 ```
-    module app.component.system.model.Role;
-    import hunt.entity;
-    @Table("role")
-    class Role : Model 
-    {
-
-
-    }
-```
-
-
 
 #### Primary Keys
 
 Entity will also assume that each table has a primary key column named `id`. You may define a protected `@PrimaryKey 、 @AutoIncrement` property to override this convention:
 
-```
-    module app.component.system.model.Role;
-    import hunt.entity;
-    @Table("role")
-    class Role : Model 
-    {
-        mixin MakeModel;
+```D
+module app.component.system.model.Role;
 
-        @AutoIncrement
-        @PrimaryKey
-        int id;
+import hunt.entity;
 
-    }
+@Table("role")
+class Role : Model 
+{
+    mixin MakeModel;
+
+    @AutoIncrement
+    @PrimaryKey
+    int id;
+}
 ```
 
 In addition, Entity assumes that the primary key is an incrementing integer value, which means that by default the primary key will automatically be cast to an `int`. If you wish to use a non-incrementing or a non-numeric primary key you must set the public `@AutoIncrement` property on your model :
 
-    
-
-
-
 If your primary key is not an integer, you should set the  `id` property on your model to `string`:
 
+```D
+module app.component.system.model.Role;
+
+import hunt.framework;
+
+@Table("role")
+class Role : Model 
+{
+    mixin MakeModel;
+
     
-    module app.component.system.model.Role;
-    import hunt.entity;
-    @Table("role")
-    class Role : Model 
-    {
-        mixin MakeModel;
+    @PrimaryKey
+    string id;
 
-        
-        @PrimaryKey
-        string id;
-
-    }
+}
+```
 
 #### Timestamps
 
-By default, Entity expects `created_at` and `updated_at` columns to exist on your tables.  If you do not wish to have these columns automatically managed by Entity, :
+By default, Entity expects `created` and `updated` columns to exist on your tables.  If you do not wish to have these columns automatically managed by Entity :
 
+```D
+module app.component.system.model.Role;
+
+import hunt.framework;
+
+@Table("role")
+class Role : Model 
+{
+    mixin MakeModel;
     
-    module app.component.system.model.Role;
-    import hunt.entity;
-    @Table("role")
-    class Role : Model 
-    {
-        mixin MakeModel;
-
-        
-        
-        int created_at;
-        int updated_at;
-
-    }
-
-
-
+    int created;
+    int updated;
+}
+```
 
 <a name="default-attribute-values"></a>
 ### Default Attribute Values
@@ -170,17 +168,19 @@ By default, Entity expects `created_at` and `updated_at` columns to exist on you
 If you would like to define the default values for some of your model's attributes, you may define  on your model:
 
     
+```D
+module app.component.system.model.Role;
 
-    module app.component.system.model.Role;
-    import hunt.entity;
-    @Table("role")
-    class Role : Model 
-    {
-        mixin MakeModel;
+import hunt.framework;
 
-        string role_name="test-role";
+@Table("role")
+class Role : Model 
+{
+    mixin MakeModel;
 
-    }
+    string role_name="test-role";
+}
+```
 
 <a name="retrieving-models"></a>
 ## Retrieving Models
@@ -188,17 +188,21 @@ If you would like to define the default values for some of your model's attribut
 Once you have created a model and Repository, you are ready to start retrieving data from your database. Think of each Entity model as a powerful allowing you to fluently query the database table associated with the model. For example:
 
     
+```D
+    auto repository = new RoleRepository();
 
-    Role[] roles = (new RoleRepository()).findAll();
+    Role[] roles = repository.findAll();
 
-    foreach (role ;roles) {
+    foreach (role ; roles) {
         writeln(role.role_name);
     }
+```
 
 #### Adding Additional Constraints
 
 The Entity `all` method will return all of the results in the model's table. Since each Entity model serves as a [query builder], you may also add constraints to queries, and then use the `get` method to retrieve the result:
 
+```D
     User findByEmail(string email) { 
         return _manager.createQuery!(User)("SELECT u FROM User u WHERE u.email = :email ")
             .setParameter("email", email)
@@ -210,14 +214,13 @@ The Entity `all` method will return all of the results in the model's table. Sin
             .setParameter("status", status)
             .getResultList();
     }
-
+```
 
 #### Refreshing Models
 
-
-
 The `save` method will re-hydrate the existing model using fresh data from the database. In addition, all of its loaded relationships will be refreshed as well:
-    
+
+```D
     UserRepository userRepository = new UserRepository();
     User user =userRepository.findByEmail("example@example.com");
 
@@ -226,8 +229,7 @@ The `save` method will re-hydrate the existing model using fresh data from the d
     user = userRepository.save(user);
 
     user.number; // "FR 900"
-
-
+```
 
 ## Inserting & Updating Models
 
@@ -236,7 +238,9 @@ The `save` method will re-hydrate the existing model using fresh data from the d
 
 To create a new record in the database, create a new model instance, set attributes on the model, then call the `save` method:
 
-    User addUser(){
+```D
+    User addUser()
+    {
         UserRepository uerRepository = new UserRepository();
         int now = time().to!int;
         User user = new User();
@@ -252,9 +256,7 @@ To create a new record in the database, create a new model instance, set attribu
         user = uerRepository.insert(user);
         return user
     }
-
-
-
+```
 
 <a name="updates"></a>
 ### Updates
@@ -270,11 +272,12 @@ The `save` method may also be used to update models that already exist in the da
 
 Updates can also be performed against any number of models that match a given query. In this example, all Roles that are `active` and have a `destination` of `San Diego` will be marked as delayed:
 
+```D
     UserRepository uerRepository = new UserRepository();
+
     User[] users = uerRepository.findAll();
     // ...
     uerRepository.updateAll(users);
+```
 
 The `updateAll` method expects an array of column and value pairs representing the columns that should be updated.
-
-
