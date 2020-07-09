@@ -114,7 +114,7 @@ void test()
 }
 ```
 
-
+<a name="hunt-redis-functions"></a>
 ## Hunt-redis functions
 All redis functions you can see :
 
