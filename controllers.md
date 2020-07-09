@@ -4,9 +4,8 @@
 - [Basic Controllers](#basic-controllers)
     - [Defining Controllers](#defining-controllers)
 - [Controller Middleware](#controller-middleware)
-- [Dependency Injection & Controllers](#dependency-injection-and-controllers)
 - [Request and Response](#request-and-response)
-- [Controllers Bound to Route](#controllers-bound-to-route)
+- [Resource Controllers](#resource-controllers)
 - [Params Validation and From Validation](#params-validation-and-from-validation)
 
 <a name="introduction"></a>
@@ -78,54 +77,6 @@ However, it is more convenient to specify middleware within your controller's co
         string world()
         {
             return "Hello world!";
-        }
-    }
-```
-
-<a name="dependency-injection-and-controllers"></a>
-## Dependency Injection & Controllers
-
-#### Constructor Injection
-
- You are able to type-hint any dependencies your controller may need in its constructor. The declared dependencies will automatically be resolved and injected into the controller instance:
-
-```d
-    module app.controller.HelloController;
-
-    import hunt.framework;
-
-    class HelloController : Controller
-    {
-        // must be here
-        mixin MakeController;
-
-        protected string name;
-
-        this(sting name) {
-            this.name = name;
-        }
-    }
-```
-
-#### Method Injection
-
-In addition to constructor injection, you may also type-hint dependencies on your controller's methods. A common use-case for method injection is injecting the `hunt.framework.http.Request` instance into your controller methods:
-
-```d
-    module app.controller.HelloController;
-
-    import hunt.framework;
-    import hunt.framework.http.Request;
-
-    class HelloController : Controller
-    {
-        // must be here
-        mixin MakeController;
-
-        @Action
-        string hello(Request request)
-        {
-            return "Hello " ~ request.input("name");
         }
     }
 ```
@@ -206,12 +157,36 @@ Controller have two property request and response，look: [Request](https://gith
     }
 ```
 
-<a name="controllers-bound-to-route"></a>
-## Controllers Bound to Route
+<a name="resource-controllers"></a>
+## Resource Controllers
 
-How the controller is bound to the route, please look: [routing]（ https://github.com/huntlabs/hunt-framework-docs/blob/master/routing.md )
+The hunt-framework resource allocates a typical "crud" route to the controller through a routing file configuration, such as you may wish to create a controller and settings routing that handles HTTP requests "welcome" for print "welcome to hunt-framework" by your application:
+
+1. Create a controller `IndexController.d` and create an action `testWelcome`:
+```d
+module app.controller.IndexController;
+
+import hunt.framework;
+
+class IndexController : Controller {
+
+    mixin MakeController;
+
+    @Action 
+    string testWelcome() {
+        return "welcome to hunt-framework";
+    }
+}
+```
+2. You may register a resourceful route to the controller: 
+
+```ini
+*     /welcome      index.testWelcome
+```
+
+More routing settings, please check [this](https://github.com/huntlabs/hunt-framework-docs/blob/master/routing.md).
 
 <a name="params-validation-and-from-validation"></a>
 ## Params Validation and From Validation
 
-Controller can verify parameters and forms, please look: [validation]（ https://github.com/huntlabs/hunt-framework-docs/blob/master/validation.md )
+Controller can verify parameters and forms, please check [this](https://github.com/huntlabs/hunt-framework-docs/blob/master/validation.md).

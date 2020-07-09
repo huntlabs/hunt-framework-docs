@@ -21,99 +21,99 @@ hunt-framework provides several different approaches to validate your applicatio
 ### Creating Form Requests
 
 Let's add a few validation rules to the `rules` method:
-
-    module app.form.LoginForm;
-
-    import hunt.framework;
-
-    class LoginForm : Form
-    {
-        mixin MakeForm;
-        
-        @Length(6, 20)
-        string username;
-        
-        @Length(8, 16)
-        string password;
-    }
+```d
+class LoginForm : Form
+{
+    mixin MakeForm;
+    
+    @Length(6, 20)
+    string username;
+    
+    @Length(8, 16)
+    string password;
+}
+```
 
 So, how are the validation rules evaluated? All you need to do is type-hint the request on your controller method. The incoming form request is validated before the controller method is called, meaning you do not need to clutter your controller with any validation logic:
+```d
+module app.controller.UserController;
 
-    module app.controller.UserController;
+import hunt.framework;
 
-    import hunt.framework;
-    import app.form.LoginForm;
+class UserController : Controller {
 
-    class UserController : Controller {
+    mixin MakeController;
 
-        mixin MakeController;
-
-        @Action
-        string login(LoginForm loginForm)
+    @Action
+    string login(LoginForm loginForm)
+    {
+        auto validRes = loginForm.valid();
+        if(!validRes.isValid)
         {
-            auto validRes = loginForm.valid();
-            if(!validRes.isValid)
-            {
-                logError("Valid error message : " ,validRes.messages());
-            }
-
-            // You can edit other logic here
-            // And don't forget write "return"
-            return "valid is ok";
+            logError("Valid error message : " ,validRes.messages());
         }
 
+        // You can edit other logic here
+        // And don't forget write "return"
+        return "valid is ok";
     }
 
-Execute valid() to verify. You can get the verification result through isvalid(). Valid returns true, otherwise false. When the validation returns false, you can get the description of the failure reason through messages(); messages() returns an array of strings (eg. string[string] ) :
+}
+```
 
+Execute valid() to verify. You can get the verification result through isvalid(). Valid returns true, otherwise false. When the validation returns false, you can get the description of the failure reason through messages(); messages() returns an array of strings (eg. string[string] ) :
+```d
     if(!validRes.isValid()) {
         auto errors = validRes.messages();
         foreach(error; errors) {
             writeln(error);
         }     
     }
+```
 
 <a name="customizing-the-error-messages"></a>
 ### Customizing The Error Messages
 
 The configuration in form allows you to customize the error messages that the form requests to use:
-
-    class LoginForm : Form
-    {
-        mixin MakeForm;
-        
-        @Length(6, 20, "username vaild false!")
-        string username;
-        
-        @Length(8, 16, "password vaild false!")
-        string password;
-    }
+```d
+class LoginForm : Form
+{
+    mixin MakeForm;
+    
+    @Length(6, 20, "username vaild false!")
+    string username;
+    
+    @Length(8, 16, "password vaild false!")
+    string password;
+}
+```
 
 <a name="get-method-validation-params"></a>
-## GET Method Validation Params
+## QueryParameters Validation
 
 The parameters obtained by get method can also use validation, which is different from 'form validation', and does not need to create a rule file for validation:
+```d
+module app.controller.UserController;
 
-    module app.controller.UserController;
+import hunt.framework;
 
-    import hunt.framework;
+class UserController : Controller {
 
-    class UserController : Controller {
+    mixin MakeController;
 
-        mixin MakeController;
-
-        @Action 
-        string addNum(int number, @Length(3, 6) string name) {
-            ConstraintValidatorContext context = validate();
-            if(context.isValid()) {
-                // You can edit other logic here
-                return "OK";
-            } else {
-                return context.toString();
-            }
+    @Action 
+    string addNum(int number, @Length(3, 6) string name) {
+        ConstraintValidatorContext context = validate();
+        if(context.isValid()) {
+            // You can edit other logic here
+            return "OK";
+        } else {
+            return context.toString();
         }
-
     }
+
+}
+```
 
 <a name="available-validation-rules"></a>
 ## Available Validation Rules
@@ -149,39 +149,40 @@ Below is a list of all available validation rules and their function:
 hunt-framework provides a variety of helpful validation rules; however, you may wish to specify some of your own. One method of registering custom validation rules is using rule objects. 
 
 The use method is similar to from validation:
+```d
+import hunt.validation;
 
-    import hunt.validation;
+class User : Valid
+{
+    mixin MakeValid;
 
-    class User : Valid
+    @Length(6, 32,"length must be between {{min}} and {{max}}")
+    string username;
+
+    @Range(18, 32)
+    int age;
+
+    @email()
+    string email;
+}
+
+void main()
+{
+    auto user = new User();
+
+    user.username = "Newton";
+    user.age = 377;
+    user.email = "newton1643@xxxx.com";
+
+    auto result = user.valid();
+
+    if (result.isValid() == false)
     {
-        mixin MakeValid;
-
-        @Length(6, 32,"length must be between {{min}} and {{max}}")
-        string username;
-
-        @Range(18, 32)
-        int age;
-
-        @email()
-        string email;
-    }
-
-    void main()
-    {
-        auto user = new User();
-
-        user.username = "Newton";
-        user.age = 377;
-        user.email = "newton1643@xxxx.com";
-
-        auto result = user.valid();
-
-        if (result.isValid() == false)
+        import std.stdio : writeln;
+        foreach(key, message; result.messages())
         {
-            import std.stdio : writeln;
-            foreach(key, message; result.messages())
-            {
-                writeln("%s: %s", key, message);
-            }
+            writeln("%s: %s", key, message);
         }
     }
+}
+```

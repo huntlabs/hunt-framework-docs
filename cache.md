@@ -1,47 +1,27 @@
 # Hunt Cache
 Universal cache library for D programming language.
 
-- [Installation](#installation)
 - [Configuration](#configuration)
-- [Support backend](#support-backend)
-- [Versions](#versions)
-- [Tips](#tips)
-- [Using Memory adapter](#memory-adapter)
-- [Using Redis adapter](#redis-adapter)
-- [For a struct or a class](#struct-class)
-- [Full example](#full-example)
-- [Helper in the framework](#helper)
-
-
-<a name="installation"></a>
-## Install
-To use this package, run the following command in your project's root directory:
-
-```sh
-dub add hunt-cache
-```
+- [Usage](#Usage)
 
 <a name="configuration"></a>
 ## Configuration
 
-Hunt framework provides an expressive, unified API for various caching backends. The cache configuration is located at `config/application.conf`. In this file you may specify which cache driver you would like to be used by default throughout your application. Hunt framework supports popular caching backends like [Memcached](https://memcached.org) and [Redis](https://redis.io) out of the box.
+Hunt framework provides an expressive, unified API for various caching backends. The cache configuration is located at `config/application.conf`. In this file you may specify which cache driver you would like to be used by default throughout your application.
 
-The cache configuration file also contains various other options, which are documented within the file, so make sure to read over these options. By default, Hunt framework is configured to use the `memory` cache driver, which stores the serialized, cached objects in the momory. For larger applications, it is recommended that you use a more robust driver such as Memcached or Redis. You may even configure multiple cache configurations for the same driver.
+The cache configuration file also contains various other options, which are documented within the file, so make sure to read over these options. By default, Hunt framework is configured to use the `memory` cache driver, which stores the serialized, cached objects in the momory. For larger applications, it is recommended that you use a more robust driver such as Redis. You may even configure multiple cache configurations for the same driver.
 
 ```ini
 # redis, memory
-cache.adapter = redis
+cache.adapter = memory
 cache.prefix = huntcache_
 cache.expire = 3600
 cache.useSecondLevelCache = false
 
-# Redis
-redis.enabled = true
+# For Redis backend
 redis.host = 127.0.0.1
 redis.port = 6379
-redis.database = 0
-redis.password = foobared
-redis.timeout = 8000
+redis.enabled = true
 ```
 
 <a name="support-backend"></a>
@@ -49,115 +29,26 @@ redis.timeout = 8000
 
 - memory
 - redis
-- libmemcached
 
-<a name="versions"></a>
-## Versions
-
- - WITH_HUNT_CACHE
- - WITH_HUNT_REDIS
- - WITH_HUNT_MEMCACHE
- - WITH_HUNT_ROCKSDB
- 
-<a name="tips"></a>
-## Tips
-
-Default support memory and redis drivers.
-
-<a name="memory-adapter"></a>
-## Using Memory adapter
+<a name="Usage"></a>
+## Usage
 
 ```d
-import hunt.cache;
-import std.stdio;
-
-void main() {
-    auto cache = CacheFactory.create();
-
-    // define key
-    string key = "my_cache_key";
-
-    // set cache
-    cache.set(key, "My cache value.");
-
-    // get cache
-    string value = cache.get(key);
-
-    writeln(value);
-}
-```
-
-<a name="redis-adapter"></a>
-## Using Redis adapter
-
-```d
-import hunt.cache;
-
-void main() {
-    CacheOption option;
-    option.adapter = "redis";
-    option.redis.host = "127.0.0.1";
-    option.redis.port = 6379;
-
-    auto cache = CacheFactory.create(option);
-
-    // code for set / get ..
-}
-```
-
-<a name="struct-class"></a>
-## For a struct or a class
-
-```d
-import hunt.cache;
-import std.stdio;
+import hunt.framework;
 
 struct User {
     string name;
     int age;
 }
 
-void main() {
-    auto cache = CacheFactory.create();
+void test()
+{
+    auto cache = app().cache();
 
-    // define key
-    string key = "user_info";
+    // 
+    cache.set("name", "jhons", 60);
+    string name = cache.get("name");
 
-    User user;
-    user.name = "zoujiaqing";
-    user.age = 99;
-
-    // set cache
-    cache.set(key, user);
-
-    // get cache
-    User userinfo = cache.get!User(key);
-
-    writeln(userinfo.name);
-}
-```
-
-<a name="full-example"></a>
-## Full example
-
-```d 
-module example;
-
-import hunt.cache;
-import hunt.net.NetUtil;
-
-struct User {
-    string name;
-    int age;
-}
-
-void main() {
-    CacheOption option;
-    option.adapter = AdapterType.MEMORY;
-    option.redis.host = "127.0.0.1";
-    option.redis.password = "foobared";
-
-    auto cache = CacheFactory.create(option);
 
     // define key
     string key = "userinfo";
@@ -166,25 +57,10 @@ void main() {
     user.name = "putao";
     user.age = 23;
 
-    try {
-        // set value
-        cache.set(key, user, 10);
+    // set value
+    cache.set(key, user, 10);
 
-        // get value
-        User userinfo = cache.get!User(key);
-    } catch (Exception ex) {
-        warning(ex);
-    }
+    // get value
+    User userinfo = cache.get!User(key);
 }
-```
-
-<a name="helper"></a>
-## Helper in the framework
-
-```d
-import hunt.framework;
-
-Cache cache = Application.getInstance().cache();
-cache.set("name", "jhons", 60);
-string name = cache.get("name");
 ```
