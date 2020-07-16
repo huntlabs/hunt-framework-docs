@@ -91,7 +91,7 @@ The `signIn` method in `this.request.auth()` can be used to authorize a user. It
     @Action Response login(LoginUserForm user) {
         string username = user.name;
         string password = user.password;
-        string rememeber = user.rememeber;
+        bool rememeber = user.rememeber;
 
         Identity authUser = this.request.auth().signIn(username, password, rememeber, AuthenticationScheme.Basic);
         // Identity authUser = this.request.signIn(username, password, rememeber, AuthenticationScheme.Bearer);
