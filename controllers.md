@@ -134,7 +134,7 @@ Controller have two property request and response，look: [Request](https://gith
     }
 ```
 
-6. rerturn `JsonResponse`
+6. return `JsonResponse`
 
 ```d
     @Action JsonResponse testJson2()
