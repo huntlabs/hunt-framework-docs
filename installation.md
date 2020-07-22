@@ -74,9 +74,9 @@ You can use `dub` to build:
 ```sh
 $ dub init myproject
 Package recipe format (sdl/json) [json]: json
-Name [myproject1]: myproject
+Name [myproject]: myproject
 Description [A minimal D application.]: A minimal D application.
-Author name [hanfengyang]: user
+Author name [user]: user
 License [proprietary]: Apache-2.0
 Copyright string [Copyright © 2020, user]: Copyright © 2017-2020, huntframework
 Add dependency (leave empty to skip) []:
