@@ -4,10 +4,6 @@
 - [Installation](installation.md)
 - [Server Configuration](configuration.md)
 
-## Architecture Concepts
-- [Service Container](container.md)
-- [Service Providers](providers.md)
-
 ## The Basics
 - [Routing](routing.md)
 - [Middleware](middleware.md)
@@ -22,7 +18,7 @@
 - [Authorization](authorization.md)
 
 ## Database
-- [Entity(ORM)](entity.md)
+- [Database ORM](entity.md)
 - [Redis](redis.md)
 - [Pagination](pagination.md)
 
@@ -35,3 +31,7 @@
 - [Cache](cache.md)
 - [Message Queue](queues.md)
 - [Scheduling](scheduling.md)
+
+## Architecture Concepts
+- [Service Container](container.md)
+- [Service Providers](providers.md)
