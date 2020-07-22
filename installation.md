@@ -44,7 +44,7 @@ $ curl https://dlang.org/install.sh | bash -s
 Once a compiler is installed, it can be activated for the current session. Useing the `-a` or `--activate` option,
 This will set up the `PATH`, `LIBRARY_PATH`, `LD_LIBRARY_PATH`, `DMD`, `DC`, and `PS1` environment variables. It's also possible to combine this into one command:
 ```sh
-$ source ~/dlang/dmd-2.2.091.0/activate
+$ source ~/dlang/dmd-2.091.0/activate
 ```
 
 Check if the installation is successful，Useing the `--version` option，If version information is displayed, the installation is successful
