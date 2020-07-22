@@ -73,6 +73,16 @@ You can use `dub` to build:
 
 ```sh
 $ dub init myproject
+Package recipe format (sdl/json) [json]: json
+Name [myproject1]: myproject
+Description [A minimal D application.]: A minimal D application.
+Author name [hanfengyang]: user
+License [proprietary]: Apache-2.0
+Copyright string [Copyright © 2020, user]: Copyright © 2017-2020, huntframework
+Add dependency (leave empty to skip) []:
+Successfully created an empty project in '/mnt/d/project/myproject'.
+Package successfully created in myproject
+
 $ cd myproject
 $ dub add hunt-framework
 $ rm source/app.d
