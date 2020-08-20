@@ -95,6 +95,7 @@ void main(string[] args)
         app.route().group("admin").withMiddleware(AuthMiddleware.stringof);
         app.route().group("admin").get("index.test").withoutMiddleware(AuthMiddleware.stringof);
     });
+}
 ```
 
 The `withoutMiddleware` method can be used to ignore some middlewares on one specified route. There is another way to do this. That's annotation `Middleware` and `WithoutMiddleware`, see belown:
