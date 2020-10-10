@@ -73,7 +73,15 @@ class IndexController : Controller {
 
 Take configuring a `GithubConfig` as an example:
 
-1. Define a MODEL. 
+1. Define a config file
+```ini
+appid = 5804c5f71095a72087f6
+secret = af1b0474
+accessTokenUrl = https://com/login/oauth/access_token
+userInfoUrl = https://api.com/user?access_token=
+```
+
+2. Define a MODEL
 Create a `source/app/config/GithubConfig.d` file:
 
 ```d
@@ -90,7 +98,7 @@ class GithubConfig {
 }
 ```
 
-2. Define a configuration file.
+3. Define a configuration file.
 Create a `source/app/config/basicalapplicationconfig.d` file:
 
 ```d
@@ -116,8 +124,10 @@ class BasicApplicationConfig : BasicApplicationConfigBase {
     GithubConfig github;
 }
 ```
-3. Load the configuration file and use it.
+
+4. Load the configuration file and use it.
 You can create a `package.d` to reference the required files, for example, create a `source/app/config/package.d` file:
+
 ```d
 module app.config;
 
@@ -133,7 +143,6 @@ Create a file `source/app/controller/IndexController.d` and read the settings in
 module app.controller.IndexController;
 
 import app.config;
-
 import hunt.framework;
 
 class IndexController : Controller {
