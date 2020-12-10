@@ -81,9 +81,11 @@ hunt framework redis you can you use  like example below:
 
 ```d
 import hunt.framework;
+import hunt.redis.Redis;
 void test()
 {
-    auto redis = app().redis();
+    Redis redis = Application.instance().redis();
+    scope(exit) redis.close();
     
     redis.set("name","john");
     string name = redis.get("name");
