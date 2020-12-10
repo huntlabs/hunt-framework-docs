@@ -1,8 +1,10 @@
 # Hunt Cache
 Universal cache library for D programming language.
 
-- [Configuration](#configuration)
-- [Usage](#Usage)
+- [Hunt Cache](#hunt-cache)
+  - [Configuration](#configuration)
+  - [Support backend](#support-backend)
+  - [Usage](#usage)
 
 <a name="configuration"></a>
 ## Configuration
@@ -43,7 +45,7 @@ struct User {
 
 void test()
 {
-    auto cache = app().cache();
+    auto cache = Application.instance().cache();
 
     // code for cache string
     cache.set("name", "jhons", 60);
