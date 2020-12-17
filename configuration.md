@@ -133,6 +133,7 @@ module app.config;
 
 public import app.config.BasicApplicationConfig;
 public import app.config.GithubConfig;
+public import hunt.framework.Simplify;
 ```
 You can also import the required files without creating `package.d`;
 <br />
@@ -143,7 +144,6 @@ Create a file `source/app/controller/IndexController.d` and read the settings in
 module app.controller.IndexController;
 
 import app.config;
-import hunt.framework;
 
 class IndexController : Controller {
 
