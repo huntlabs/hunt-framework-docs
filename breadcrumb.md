@@ -168,3 +168,37 @@ class TestController : Controller
     }
 }
 ```
+
+### 6. 赋值到模板并渲染
+
+在 `controller` 的方法中把面包屑数据赋值到模板:
+
+```d
+    auto breadCrumbs = Application.instance.breadcrumbs().generate("sign");
+    view.assign("breadcrumbs", breadCrumbs);
+```
+
+在模板中渲染出来:
+```
+{% if breadcrumbs.defined and breadcrumbs.length>0 %}
+    <div class="col-sm mb-2 mb-sm-0">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-no-gutter">
+                {% for item in breadcrumbs %}
+                    {% if not loop.last %}
+                        <li class="breadcrumb-item">
+                            {% if item.link %}
+                                <a class="breadcrumb-link" href="{{ item.link }}">{{ item.title }}</a>
+                            {% else %}
+                                {{ item.title }}
+                            {% endif %}
+                        </li>
+                    {% else %}
+                        <li class="breadcrumb-item active" aria-current="page">{{ item.title }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </nav>
+    </div>
+{% endif %}
+```
