@@ -1,4 +1,4 @@
-## Breadcrumbs
+## Breadcrumb
 
 In `Hunt Framework`, you can use `Breadcrumb` by extending the `ServiceProvider`.
 

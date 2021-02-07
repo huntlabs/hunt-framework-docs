@@ -24,6 +24,7 @@
 
 ## Frontend
 - [View Templates](views.md)
+- [Breadcrumb](breadcrumb.md)
 - [Localization](localization.md)
 
 ## Digging Deeper
