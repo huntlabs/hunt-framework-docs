@@ -32,6 +32,7 @@
 - [Cache](cache.md)
 - [Message Queue](queues.md)
 - [Scheduling](scheduling.md)
+- [gRPC](grpc.md)
 
 ## Architecture Concepts
 - [Service Container](container.md)
